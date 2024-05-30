@@ -1,16 +1,17 @@
-import { Text } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import useRecipes from "../hooks/useRecipes";
+import RecipeCard from "./RecipeCard";
 
 const RecipeGrid = () => {
   const { recipes, error } = useRecipes();
   return (
     <>
       {error && <Text>{error}</Text>}
-      <ul>
+      <SimpleGrid columns={{sm: 1, md:2 , lg:3 , xl: 5  }} padding='10px' spacing={10}>
         {recipes.map((recipe) => (
-          <li key={recipe.id}>{recipe.title}</li>
+          <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
-      </ul>
+      </SimpleGrid>
     </>
   );
 };

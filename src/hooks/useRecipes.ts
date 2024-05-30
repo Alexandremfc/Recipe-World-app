@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import apiCleint from "../services/api-cleint";
 import { CanceledError } from "axios";
 
-interface Recipe {
-    id: number;
+export interface Recipe {
+    id: string;
     title: string;
+    image: string;
   }
   
   interface FetchRecipesResponse {
@@ -20,7 +21,10 @@ const useRecipes = () => {
     const controller = new AbortController();
     apiCleint
       .get<FetchRecipesResponse>("/recipes" , {signal: controller.signal})
-      .then((res) => setRecipes(res.data.results))
+      .then((res) => {
+        console.log(res.data)
+        setRecipes(res.data.results)
+      })
       .catch((err) => {
         if(err instanceof CanceledError) return;
         setError(err.message);

@@ -1,15 +1,14 @@
-import { HStack } from "@chakra-ui/react"
-import { FaReact } from "react-icons/fa6";
+import { HStack, Image } from "@chakra-ui/react";
 import ColorModeSwitch from "./ColorModeSwitch";
-
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   return (
-    <HStack justifyContent='space-between' padding='10px'>
-        <FaReact size={60} color="dodgerblue" />
-        <ColorModeSwitch />
+    <HStack justifyContent="space-between" padding="10px">
+      <Image src={logo} boxSize='100px'  />
+      <ColorModeSwitch />
     </HStack>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

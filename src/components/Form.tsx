@@ -1,12 +1,4 @@
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  Box,
-  Button,
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Box, Button } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
 import apiCleint from "../services/api-cleint";
 import { AxiosError } from "axios";
@@ -46,7 +38,8 @@ const Form = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors , isValid },
+    reset,
+    formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
@@ -57,7 +50,12 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit((data) => {
+        onSubmit(data);
+        reset();
+      })}
+    >
       <FormControl>
         <Box mb="3">
           <FormLabel htmlFor="name">Name</FormLabel>

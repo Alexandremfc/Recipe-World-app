@@ -7,14 +7,18 @@ import {
   Box,
   Button,
 } from "@chakra-ui/react";
-import { FormEvent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import apiCleint from "../services/api-cleint";
+import { AxiosError } from "axios";
 
 const Form = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    apiCleint
+      .post("/users", data)
+      .then((res) => console.log(res))
+      .catch((err: AxiosError) => console.log(err.response?.data));
   };
 
   return (

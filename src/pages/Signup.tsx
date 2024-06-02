@@ -1,7 +1,6 @@
-import { Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
-import Form from "../components/Form";
+import { Container, Heading, Text } from "@chakra-ui/react";
+import ResgisterForm from "../components/ResgisterForm";
 import Navbar from "../components/Navbar";
-import { Link } from "react-router-dom";
 
 const Signup = () => {
   return (
@@ -15,7 +14,7 @@ const Signup = () => {
           Welcome to Recipe World . please signup or login in order to share
           your meals.{" "}
         </Text>
-        <Form />
+        <ResgisterForm />
       </Container>
     </>
   );

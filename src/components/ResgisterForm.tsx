@@ -34,7 +34,7 @@ const schema = z.object({
 // // extract a type from the schema object
 type FormData = z.infer<typeof schema>;
 
-const Form = () => {
+const ResgisterForm = () => {
   const {
     register,
     handleSubmit,
@@ -45,7 +45,9 @@ const Form = () => {
   const onSubmit = (data: FieldValues) => {
     apiCleint
       .post("/users", data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.headers);
+      })
       .catch((err: AxiosError) => console.log(err.response?.data));
   };
 
@@ -82,4 +84,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default ResgisterForm;

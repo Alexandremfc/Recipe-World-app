@@ -1,24 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FormControl, FormLabel, Input, Box, Button } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
 import apiCleint from "../services/api-cleint";
 import { AxiosError } from "axios";
 import { Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../contexts/authContext";
 
 
 const LoginForm = () => {
-    const [token , setToken] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const { storeToken } = useContext(AuthContext);
   
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {
     apiCleint
       .post("/auth", data)
       .then((res) => {
-        setToken(res.data);
+        storeToken(res.data);
+        navigate('/');
       })
       .catch((err: AxiosError) => {
         setError(err.message);
@@ -29,9 +32,6 @@ const LoginForm = () => {
     <form
       onSubmit={handleSubmit((data) => {
         onSubmit(data);
-        reset();
-        if(token)
-            navigate('/');
       })}
     >
       <FormControl>
@@ -51,5 +51,6 @@ const LoginForm = () => {
     </form>
   );
 };
+
 
 export default LoginForm;

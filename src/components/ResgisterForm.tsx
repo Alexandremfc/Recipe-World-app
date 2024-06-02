@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 import { Text } from "@chakra-ui/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { useNavigate } from "react-router-dom";
 
 const passwordComplexitySchema = z
   .string()
@@ -35,10 +36,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const ResgisterForm = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
@@ -46,7 +47,8 @@ const ResgisterForm = () => {
     apiCleint
       .post("/users", data)
       .then((res) => {
-        console.log(res.headers);
+        console.log(res);
+        navigate('/login');
       })
       .catch((err: AxiosError) => console.log(err.response?.data));
   };
@@ -55,7 +57,6 @@ const ResgisterForm = () => {
     <form
       onSubmit={handleSubmit((data) => {
         onSubmit(data);
-        reset();
       })}
     >
       <FormControl>

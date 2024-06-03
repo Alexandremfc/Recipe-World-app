@@ -7,11 +7,15 @@ interface Props {
 }
 const RecipeCard = ({ recipe }: Props) => {
   return (
-    <Card borderRadius="10px" overflow='hidden'>
+    <Card borderRadius="10px" overflow="hidden">
       <Image src={recipe.image} />
       <CardBody>
-        <Heading mb={3} fontSize='2xl'>{recipe.title}</Heading>
-        <Button><Link to="/recipes/:id">Show Details</Link></Button>
+        <Heading mb={3} fontSize="2xl">
+          {recipe.title}
+        </Heading>
+        <Button>
+          <Link to={`/recipes/${recipe._id}`}>Show Details</Link>
+        </Button>
       </CardBody>
     </Card>
   );

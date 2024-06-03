@@ -3,12 +3,12 @@ import apiCleint from "../services/api-cleint";
 import { CanceledError } from "axios";
 
 export interface Recipe {
-    id: string;
+    _id: string;
     title: string;
     image: string;
   }
   
-  interface FetchRecipesResponse {
+  export interface FetchRecipesResponse {
     count: number;
     results: Recipe[];
   }

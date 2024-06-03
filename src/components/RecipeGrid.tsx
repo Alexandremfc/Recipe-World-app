@@ -9,7 +9,7 @@ const RecipeGrid = () => {
       {error && <Text color='tomato'>{error}</Text>}
       <SimpleGrid columns={{sm: 1, md:2 , lg:3 , xl: 5  }} padding='10px' spacing={10}>
         {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard key={recipe._id} recipe={recipe} />
         ))}
       </SimpleGrid>
     </>

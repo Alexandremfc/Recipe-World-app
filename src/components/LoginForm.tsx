@@ -7,8 +7,13 @@ import { Text } from "@chakra-ui/react";
 import AuthContext from "../contexts/authContext";
 
 const LoginForm = () => {
+  
+  const storeToken = (token: string) => {
+    localStorage.setItem("authToken", token);
+  };
+  
   const [error, setError] = useState("");
-  const { storeToken, setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {

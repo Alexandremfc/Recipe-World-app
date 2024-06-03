@@ -6,13 +6,9 @@ import AuthContext from "./contexts/authContext";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const storeToken = (token: string) => {
-    localStorage.setItem("authToken", token);
-  };
-
   return (
     <>
-    <AuthContext.Provider value={{storeToken , isLoggedIn , setIsLoggedIn}}>
+    <AuthContext.Provider value={{isLoggedIn , setIsLoggedIn}}>
       {isLoggedIn && <HomePage />}
 
       {!isLoggedIn && <Login />}

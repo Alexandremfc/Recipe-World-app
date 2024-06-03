@@ -3,20 +3,22 @@ import { Dispatch, useState } from "react";
 import { FieldValue, FieldValues, useForm } from "react-hook-form";
 import apiCleint from "../services/api-cleint";
 
-const UploadImage = () => {
-  const { register, handleSubmit } = useForm();  
+interface Props {
+  setSelectedImage: Dispatch<React.SetStateAction<string>>;
+}
+const UploadImage = ({ setSelectedImage }: Props) => {
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-      const file = data.images[0];
-      console.log(file);
-    
-    if(!file){
-        console.error("No file selected.");
-        return;
+    const file = data.images[0];
+
+    if (!file) {
+      console.error("No file selected.");
+      return;
     }
     const formData = new FormData();
-    formData.append('image', file);
-    console.log(formData)
+    formData.append("image", file);
+    setSelectedImage(file.name);
 
     apiCleint
       .post("/recipes/upload", formData)

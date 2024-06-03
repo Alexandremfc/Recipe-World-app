@@ -19,7 +19,8 @@ import { linesArray } from "../services/lines-array";
 import UploadImage from "./UploadImage";
 
 const RecipeForm = () => {
-  const [value, setValue] = useState("Breakfast");
+  const [category, setCategory] = useState("Breakfast");
+  const [selectedImage , setSelectedImage] = useState("");
 
   const {
     register,
@@ -27,30 +28,34 @@ const RecipeForm = () => {
     formState: { errors },
   } = useForm();
 
+// TODO: the author hardcoded:
   const onSubmit = (data: FieldValues) => {
     const newRecipe = {
       ...data,
       ingridients: linesArray(data.ingridients),
       instructions: linesArray(data.instructions),
+      image: selectedImage,
+      category: category,
+      author: "665c3e09a9406bbd9aec35c0"
     };
-    // apiCleint
-    //   .post("/recipes", data)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err: AxiosError) => console.log(err.response?.data));
+    apiCleint
+      .post("/recipes", newRecipe, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err: AxiosError) => console.log(err.response?.data));
   };
 
   return (
     <>
-      <UploadImage />
+      <UploadImage setSelectedImage={setSelectedImage} />
       <form
         onSubmit={handleSubmit((data) => {
           onSubmit(data);
         })}
       >
         <FormControl>
-          <Box mb="3">
+          <Box my="3">
             <FormLabel htmlFor="title">Title</FormLabel>
             <Input {...register("title")} id="title" type="text" size="sm" />
             {/* {errors.name && <Text color="tomato">{errors.name.message}</Text>} */}
@@ -60,7 +65,7 @@ const RecipeForm = () => {
               <Heading as="h2" size="md">
                 category:
               </Heading>
-              <RadioGroup onChange={setValue} value={value}>
+              <RadioGroup onChange={setCategory} value={category}>
                 <Stack direction="row">
                   <Radio value="Breakfast">Breakfast</Radio>
                   <Radio value="Lunch">Lunch</Radio>

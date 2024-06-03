@@ -4,16 +4,11 @@ import { FieldValues, useForm } from "react-hook-form";
 import apiCleint from "../services/api-cleint";
 import { AxiosError } from "axios";
 import { Text } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/authContext";
-
 
 const LoginForm = () => {
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-
-  const { storeToken } = useContext(AuthContext);
-  
+  const { storeToken, setIsLoggedIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {
@@ -21,10 +16,19 @@ const LoginForm = () => {
       .post("/auth", data)
       .then((res) => {
         storeToken(res.data);
-        navigate('/');
+        setIsLoggedIn(true);
       })
       .catch((err: AxiosError) => {
-        setError(err.message);
+        console.log(err.response?.data);
+        if (err.response?.data) {
+          setError(
+            typeof err.response.data === "string"
+              ? err.response.data
+              : JSON.stringify(err.response.data)
+          );
+        } else {
+          setError("An unknown error occurred");
+        }
       });
   };
 
@@ -51,6 +55,5 @@ const LoginForm = () => {
     </form>
   );
 };
-
 
 export default LoginForm;

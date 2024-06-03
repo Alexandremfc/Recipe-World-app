@@ -12,7 +12,7 @@ const App = () => {
 
   return (
     <>
-    <AuthContext.Provider value={{storeToken}}>
+    <AuthContext.Provider value={{storeToken , isLoggedIn , setIsLoggedIn}}>
       {isLoggedIn && <HomePage />}
 
       {!isLoggedIn && <Login />}

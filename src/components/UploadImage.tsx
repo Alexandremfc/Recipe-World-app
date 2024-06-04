@@ -1,6 +1,6 @@
 import { Button, FormLabel, Input } from "@chakra-ui/react";
-import { Dispatch, useState } from "react";
-import { FieldValue, FieldValues, useForm } from "react-hook-form";
+import { Dispatch } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 import apiCleint from "../services/api-cleint";
 
 interface Props {

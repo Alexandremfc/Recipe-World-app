@@ -1,7 +1,7 @@
 import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import ResgisterForm from "../components/ResgisterForm";
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
+import { Link as ChakraLink } from '@chakra-ui/react'
 
 
 const Signup = () => {

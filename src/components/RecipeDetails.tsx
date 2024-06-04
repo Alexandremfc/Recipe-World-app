@@ -26,7 +26,6 @@ interface Recipe {
 const RecipeDetails = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState<Recipe>();
-  console.log(recipe?.image)
 
   useEffect(() => {
     apiCleint
@@ -52,8 +51,10 @@ const RecipeDetails = () => {
             ))}
           </UnorderedList>
           <OrderedList>
-          <Heading as="h2">instructions</Heading>
-          {recipe?.instructions.map(instruction => <ListItem>{instruction}</ListItem>)}
+            <Heading as="h2">instructions</Heading>
+            {recipe?.instructions.map((instruction) => (
+              <ListItem>{instruction}</ListItem>
+            ))}
           </OrderedList>
         </CardBody>
         <CardFooter>

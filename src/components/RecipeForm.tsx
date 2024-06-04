@@ -7,7 +7,6 @@ import {
   Heading,
   Input,
   Stack,
-  Text,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { Textarea } from "@chakra-ui/react";
@@ -25,7 +24,7 @@ const RecipeForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm();
 
 // TODO: the author hardcoded:

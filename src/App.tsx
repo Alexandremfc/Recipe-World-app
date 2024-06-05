@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useContext, useEffect } from "react";
 import HomePage from "./pages/HomePage";
-import Login from "./pages/Login";
 import AuthContext from "./contexts/authContext";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AuthContext);
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  });
+  
   return (
-    <>
-    <AuthContext.Provider value={{isLoggedIn , setIsLoggedIn}}>
-      {isLoggedIn && <HomePage />}
-
-      {!isLoggedIn && <Login />}
-      </AuthContext.Provider>
-    </>
+    <HomePage />
   );
 };
 

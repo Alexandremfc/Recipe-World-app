@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import apiCleint from "../services/api-cleint";
+import apiClient from "../services/api-cleint";
 
 interface Recipe {
   title: string;
@@ -28,8 +28,8 @@ const RecipeDetails = () => {
   const [recipe, setRecipe] = useState<Recipe>();
 
   useEffect(() => {
-    apiCleint
-      .get("/recipes/" + id)
+    apiClient
+      .get("/api/recipes/" + id)
       .then((res) => setRecipe(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -46,14 +46,14 @@ const RecipeDetails = () => {
           <Text mb={4}>{recipe?.description}</Text>
           <UnorderedList my={5}>
             <Heading as="h2">Ingridients</Heading>
-            {recipe?.ingridients.map((ing) => (
-              <ListItem>{ing}</ListItem>
+            {recipe?.ingridients.map((ing, i) => (
+              <ListItem key={i}>{ing}</ListItem>
             ))}
           </UnorderedList>
           <OrderedList>
             <Heading as="h2">instructions</Heading>
-            {recipe?.instructions.map((instruction) => (
-              <ListItem>{instruction}</ListItem>
+            {recipe?.instructions.map((instruction, i) => (
+              <ListItem key={i}>{instruction}</ListItem>
             ))}
           </OrderedList>
         </CardBody>
@@ -61,6 +61,7 @@ const RecipeDetails = () => {
           <Text>Author: {recipe?.author}</Text>
         </CardFooter>
       </Card>
+      
     </div>
   );
 };

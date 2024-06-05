@@ -20,7 +20,7 @@ const useRecipes = () => {
   useEffect(() => {
     const controller = new AbortController();
     apiCleint
-      .get<FetchRecipesResponse>("/recipes" , {signal: controller.signal})
+      .get<FetchRecipesResponse>("/api/recipes" , {signal: controller.signal})
       .then((res) => {
         console.log(res.data)
         setRecipes(res.data.results)

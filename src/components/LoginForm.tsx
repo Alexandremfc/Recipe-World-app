@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
 import { FormControl, FormLabel, Input, Box, Button } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
-import apiCleint from "../services/api-cleint";
+import apiClient from "../services/api-cleint";
 import { AxiosError } from "axios";
 import { Text } from "@chakra-ui/react";
 import AuthContext from "../contexts/authContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   
   const storeToken = (token: string) => {
     localStorage.setItem("authToken", token);
@@ -17,31 +19,33 @@ const LoginForm = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-    apiCleint
-      .post("/auth", data)
+    apiClient
+      .post("/api/auth", data)
       .then((res) => {
         storeToken(res.data);
         setIsLoggedIn(true);
+        navigate('/');
       })
-      .catch((err: AxiosError) => {
-        console.log(err.response?.data);
-        if (err.response?.data) {
-          setError(
-            typeof err.response.data === "string"
-              ? err.response.data
-              : JSON.stringify(err.response.data)
-          );
-        } else {
-          setError("An unknown error occurred");
-        }
-      });
+      .catch(onError);
+  };
+
+  const onError = (err: AxiosError) => {
+    console.error(err);
+
+    if (err.response?.data) {
+      setError(
+        typeof err.response.data === "string"
+          ? err.response.data
+          : JSON.stringify(err.response.data)
+      );
+    } else {
+      setError("An unknown error occurred");
+    }
   };
 
   return (
     <form
-      onSubmit={handleSubmit((data) => {
-        onSubmit(data);
-      })}
+      onSubmit={handleSubmit((data) => onSubmit(data))}
     >
       <FormControl>
         <Box mb="3">

@@ -7,6 +7,7 @@ import {
   Heading,
   Input,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { Textarea } from "@chakra-ui/react";
@@ -17,10 +18,11 @@ import { useState } from "react";
 import { linesArray } from "../services/lines-array";
 import UploadImage from "./UploadImage";
 
+
 const RecipeForm = () => {
   const [category, setCategory] = useState("Breakfast");
   const [selectedImage , setSelectedImage] = useState("");
-
+  const [error, setError] = useState("");
   const {
     register,
     handleSubmit,
@@ -38,11 +40,25 @@ const RecipeForm = () => {
       author: "665c3e09a9406bbd9aec35c0"
     };
     apiCleint
-      .post("/recipes", newRecipe, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
+      .post("/api/recipes", newRecipe, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
       .then((res) => {
         console.log(res);
       })
-      .catch((err: AxiosError) => console.log(err.response?.data));
+      .catch(onError);
+  };
+
+  const onError = (err: AxiosError) => {
+    console.error(err);
+
+    if (err.response?.data) {
+      setError(
+        typeof err.response.data === "string"
+          ? err.response.data
+          : JSON.stringify(err.response.data)
+      );
+    } else {
+      setError("An unknown error occurred");
+    }
   };
 
   return (
@@ -80,7 +96,7 @@ const RecipeForm = () => {
             {/* {errors.email && <Text color="tomato">{errors.email.message}</Text>} */}
           </Box>
           <Box mb="3">
-            <FormLabel htmlFor="ingridients">ingridients</FormLabel>
+            <FormLabel htmlFor="ingridients">ingredients</FormLabel>
             <Textarea
               {...register("ingridients")}
               id="ingridients"
@@ -104,6 +120,7 @@ const RecipeForm = () => {
           <Button mt={4} type="submit" colorScheme="teal">
             Create
           </Button>
+          {error && <Text color="tomato">{error}</Text>}
         </FormControl>
       </form>
     </>
@@ -111,3 +128,4 @@ const RecipeForm = () => {
 };
 
 export default RecipeForm;
+ 

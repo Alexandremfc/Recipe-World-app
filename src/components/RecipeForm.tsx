@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { Textarea } from "@chakra-ui/react";
-import apiCleint from "../services/api-cleint";
+import apiClient from "../services/api-client";
 import { FieldValues, useForm } from "react-hook-form";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
@@ -85,8 +85,8 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
       category: category
     };
 
-    const createOrUpdate = isEditing ? apiCleint.put : apiCleint.post;
-    const endpoint = isEditing ? `/api/recipes/${recipe._id}` : "/api/recipes";
+    const createOrUpdate = isEditing ? apiClient.put : apiClient.post;
+    const endpoint = isEditing ? `/recipes/${recipe._id}` : "/recipes";
   
     createOrUpdate(endpoint, newRecipe, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
       .then((res) => {

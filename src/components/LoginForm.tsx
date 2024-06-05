@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { FormControl, FormLabel, Input, Box, Button } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
-import apiClient from "../services/api-cleint";
+import apiClient from "../services/api-client";
 import { AxiosError } from "axios";
 import { Text } from "@chakra-ui/react";
 import AuthContext from "../contexts/authContext";
@@ -20,7 +20,7 @@ const LoginForm = () => {
 
   const onSubmit = (data: FieldValues) => {
     apiClient
-      .post("/api/auth", data)
+      .post("auth", data)
       .then((res) => {
         storeToken(res.data);
         setIsLoggedIn(true);

@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import apiClient from "../services/api-cleint";
+import apiClient from "../services/api-client";
 import { useNavigate } from "react-router-dom";
 import StarRating from "./StarRating";
 import Recipe from "../interfaces/Recipe";
@@ -26,7 +26,7 @@ const RecipeDetails = () => {
 
   useEffect(() => {
     apiClient
-      .get("/api/recipes/" + id, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
+      .get("recipes/" + id, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
       .then((res) => {
         setRecipe(res.data);
         setRating(getReviewAverage(res.data));
@@ -42,7 +42,7 @@ const RecipeDetails = () => {
     if (!recipe) return;
 
     apiClient
-      .delete(`/api/recipes/${id}`, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
+      .delete(`/recipes/${id}`, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
       .then((response) => {
         console.log("Recipe Deleted", response.data);
         navigate('/');
@@ -55,7 +55,7 @@ const RecipeDetails = () => {
   const saveRating = (ratingValue: number) => {
     setRating(ratingValue);
     apiClient
-        .put(`/api/recipes/${id}/rating`, { rating: ratingValue }, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
+        .put(`recipes/${id}/rating`, { rating: ratingValue }, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
         .catch(console.error);
   };
 

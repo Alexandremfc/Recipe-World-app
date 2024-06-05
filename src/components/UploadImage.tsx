@@ -1,7 +1,7 @@
 import { Button, FormLabel, Input } from "@chakra-ui/react";
 import { Dispatch } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import apiClient from "../services/api-cleint";
+import apiClient from "../services/api-client";
 
 interface Props {
   setSelectedImage: Dispatch<React.SetStateAction<string>>;
@@ -20,7 +20,7 @@ const UploadImage = ({ setSelectedImage }: Props) => {
     formData.append("image", file);
 
     apiClient
-      .post("/api/recipes/upload", formData)
+      .post("recipes/upload", formData)
       .then((res: any) => setSelectedImage(res.data.file.filename))
       .catch((err) => console.log(err));
   };

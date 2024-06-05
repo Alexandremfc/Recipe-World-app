@@ -18,11 +18,10 @@ const UploadImage = ({ setSelectedImage }: Props) => {
     }
     const formData = new FormData();
     formData.append("image", file);
-    setSelectedImage(file.name);
 
     apiClient
       .post("/api/recipes/upload", formData)
-      .then((res) => console.log(res))
+      .then((res: any) => setSelectedImage(res.data.file.filename))
       .catch((err) => console.log(err));
   };
   return (

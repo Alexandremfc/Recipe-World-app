@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { Flex, Box, ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./theme.ts";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./pages/routes.tsx";
 import AuthContext from "./contexts/authContext";
+import Footer from "./components/Footer";
 
 function Root() {
 
@@ -15,10 +16,18 @@ function Root() {
 
   return (
     <AuthContext.Provider value={{isLoggedIn , setIsLoggedIn}}>
-        <React.StrictMode>
+      <React.StrictMode>
         <ChakraProvider theme={theme}>
-          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-          <RouterProvider router={router} />
+          <Flex
+            minHeight={"100vh"}
+            flexDirection={"column"}
+          >
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+            <Box flexGrow={1}>
+              <RouterProvider router={router} />
+            </Box>
+            <Footer/>
+          </Flex>
         </ChakraProvider>
       </React.StrictMode>
     </AuthContext.Provider>

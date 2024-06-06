@@ -16,7 +16,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { linesArray } from "../services/lines-array";
-import UploadImage from "./UploadImage";
+
 import { useNavigate } from "react-router-dom";
 
 import Recipe from "../interfaces/Recipe";

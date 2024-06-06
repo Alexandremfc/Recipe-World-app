@@ -1,7 +1,9 @@
+import User from "./User";
+
 export default interface Recipe {
     _id: string,
     title: string;
-    author: string;
+    author: User;
     category: string;
     description: string;
     ingridients: string[];

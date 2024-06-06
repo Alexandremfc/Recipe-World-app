@@ -86,12 +86,13 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
     };
 
     const createOrUpdate = isEditing ? apiClient.put : apiClient.post;
-    const endpoint = isEditing ? `/recipes/${recipe._id}` : "/recipes";
+    const navigateUrl = isEditing ? `/recipes/${recipe._id}` : "/";
+    const endpoint = isEditing ? `recipes/${recipe._id}` : "recipes";
   
     createOrUpdate(endpoint, newRecipe, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
       .then((res) => {
         console.log(res);
-        navigate(`/recipes/${res.data._id}`);
+        navigate(navigateUrl);
       })
       .catch(onError);      
   };

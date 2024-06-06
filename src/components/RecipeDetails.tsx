@@ -9,6 +9,8 @@ import {
   Text,
   UnorderedList,
   Button,
+  Spinner,
+  Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -32,7 +34,7 @@ const RecipeDetails = () => {
         setRecipe(res.data);
         setReviewsCount(res.data.reviews?.length || 0);
         setRating(getReviewAverage(res.data));
-      })
+    })
       .catch((err) => console.log(err));
   }, []);
 
@@ -63,51 +65,56 @@ const RecipeDetails = () => {
   };
 
   return (
-    <div>
-      <Card borderRadius="10px" overflow="hidden" width="80%">
-        <Image src={recipe?.image} height="50%" width="100%" />
-        <CardBody>
-          <Heading mb={3} fontSize="2xl">
-            {recipe?.title}
-          </Heading>
-          <Text>Category: {recipe?.category}</Text>
-          <Text mb={4}>{recipe?.description}</Text>
-          <UnorderedList my={5}>
-            <Heading as="h2">Ingredients</Heading>
-            {recipe?.ingridients.map((ing, i) => (
-              <ListItem key={i}>{ing}</ListItem>
-            ))}
-          </UnorderedList>
-          <OrderedList>
-            <Heading as="h2">Instructions</Heading>
-            {recipe?.instructions.map((instruction, i) => (
-              <ListItem key={i}>{instruction}</ListItem>
-            ))}
-          </OrderedList>
-        </CardBody>
-        <CardFooter>
-          <Text>Author: {recipe?.author}</Text>
-        </CardFooter>
-        <StarRating rating={rating} setRating={saveRating}/>
-        <Text>({reviewsCount} reviews)</Text>
-      </Card>
-      <Button
-        colorScheme="red"
-        size="sm"
-        onClick={handleDelete}
-        mr="2"
-      >
-        Delete
-      </Button>
+    <>
+      {!recipe && <Center height="100vh"><Spinner/></Center>}
+      {recipe &&
+      <div>
+        <Card borderRadius="10px" overflow="hidden" width="80%">
+          <Image src={recipe.image} height="50%" width="100%" />
+          <CardBody>
+            <Heading mb={3} fontSize="2xl">
+              {recipe.title}
+            </Heading>
+            <Text>Category: {recipe.category}</Text>
+            <Text mb={4}>{recipe.description}</Text>
+            <UnorderedList my={5}>
+              <Heading as="h2">Ingredients</Heading>
+              {recipe.ingridients.map((ing, i) => (
+                <ListItem key={i}>{ing}</ListItem>
+              ))}
+            </UnorderedList>
+            <OrderedList>
+              <Heading as="h2">Instructions</Heading>
+              {recipe.instructions.map((instruction, i) => (
+                <ListItem key={i}>{instruction}</ListItem>
+              ))}
+            </OrderedList>
+          </CardBody>
+          <CardFooter>
+            <Text>Author: {recipe.author.email}</Text>
+          </CardFooter>
+          <StarRating rating={rating} setRating={saveRating}/>
+          <Text>({reviewsCount} reviews)</Text>
+        </Card>
+        <Button
+          colorScheme="red"
+          size="sm"
+          onClick={handleDelete}
+          mr="2"
+        >
+          Delete
+        </Button>
 
-      <Button
-        colorScheme="yellow"
-        size="sm"
-        mr="2"
-      >
-        <Link to={"/recipes/" + id + "/edit"}>Edit recipe</Link>
-      </Button>
-    </div>
+        <Button
+          colorScheme="yellow"
+          size="sm"
+          mr="2"
+        >
+          <Link to={"/recipes/" + id + "/edit"}>Edit recipe</Link>
+        </Button>
+      </div>
+      }
+    </>
   );
 };
 

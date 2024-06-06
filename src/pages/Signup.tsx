@@ -1,5 +1,5 @@
 import { Box, Container, Heading, Text } from "@chakra-ui/react";
-import RegisterForm from "../components/ResgisterForm";
+import RegisterForm from "../components/RegisterForm";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link as ChakraLink } from '@chakra-ui/react'
 

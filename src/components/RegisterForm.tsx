@@ -93,7 +93,7 @@ const RegisterForm = () => {
           )}
         </Box>
         <Button mt={4} type="submit" colorScheme="teal">
-          Resgister
+          Register
         </Button>
         {error && <Text color="tomato">{error}</Text>}
       </FormControl>

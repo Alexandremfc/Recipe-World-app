@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 const RecipeDetails = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState<Recipe>();
+  const [reviewsCount, setReviewsCount] = useState(0);
   const [rating, setRating] = useState(0);
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ const RecipeDetails = () => {
       .get("recipes/" + id, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
       .then((res) => {
         setRecipe(res.data);
+        setReviewsCount(res.data.reviews?.length || 0);
         setRating(getReviewAverage(res.data));
       })
       .catch((err) => console.log(err));
@@ -56,6 +58,7 @@ const RecipeDetails = () => {
     setRating(ratingValue);
     apiClient
         .put(`recipes/${id}/rating`, { rating: ratingValue }, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
+        .then(() => setReviewsCount(prevCount => prevCount + 1))
         .catch(console.error);
   };
 
@@ -86,6 +89,7 @@ const RecipeDetails = () => {
           <Text>Author: {recipe?.author}</Text>
         </CardFooter>
         <StarRating rating={rating} setRating={saveRating}/>
+        <Text>({reviewsCount} reviews)</Text>
       </Card>
       <Button
         colorScheme="red"

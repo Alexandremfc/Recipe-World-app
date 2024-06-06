@@ -34,7 +34,7 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
   console.log(defaultValues);
 
   const [category, setCategory] = useState(defaultValues.category);
-  const [selectedImage , setSelectedImage] = useState(defaultValues.image);
+  // const [selectedImage , setSelectedImage] = useState(defaultValues.image);
   const [error, setError] = useState("");
   const {
     register,
@@ -81,7 +81,7 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
       ...data,
       ingridients: linesArray(data.ingridients),
       instructions: linesArray(data.instructions),
-      image: selectedImage,
+      // image: selectedImage,
       category: category
     };
 
@@ -113,7 +113,7 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
 
   return (
     <>
-      {!isEditing && <UploadImage setSelectedImage={setSelectedImage} />}
+      {/* {!isEditing && <UploadImage setSelectedImage={setSelectedImage} />} */}
 
       <form
         onSubmit={handleSubmit((data) => {
@@ -121,6 +121,11 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
         })}
       >
         <FormControl>
+        <Box my="3">
+            <FormLabel htmlFor="Image">Image</FormLabel>
+            <Input {...register("image", {value: defaultValues.image})} id="image" type="url" size="sm" />
+            {/* {errors.name && <Text color="tomato">{errors.name.message}</Text>} */}
+          </Box>
           <Box my="3">
             <FormLabel htmlFor="title">Title</FormLabel>
             <Input {...register("title", {value: defaultValues.title})} id="title" type="text" size="sm" />

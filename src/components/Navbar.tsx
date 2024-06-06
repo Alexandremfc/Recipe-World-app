@@ -19,6 +19,7 @@ const Navbar = () => {
   return (
     <HStack justifyContent="space-between" padding="10px">
       <Image src={logo} boxSize='100px'  />
+      <Button><Link to="/">Home</Link></Button>
       <Button><Link to="/addRecipe">Create a new Recipe</Link></Button>
       <Button onClick={logout}>Logout</Button>
       <ColorModeSwitch />

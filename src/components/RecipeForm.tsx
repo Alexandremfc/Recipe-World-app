@@ -92,7 +92,8 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
     createOrUpdate(endpoint, newRecipe, {headers: {"x-auth-token" : localStorage.getItem("authToken")}})
       .then((res) => {
         console.log(res);
-        navigate(navigateUrl);
+        // navigate(navigateUrl);
+        navigate("/")
       })
       .catch(onError);      
   };

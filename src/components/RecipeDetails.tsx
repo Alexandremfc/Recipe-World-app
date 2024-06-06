@@ -11,6 +11,8 @@ import {
   Button,
   Spinner,
   Center,
+  Box,
+  Stack
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -19,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import StarRating from "./StarRating";
 import Recipe from "../interfaces/Recipe";
 import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const RecipeDetails = () => {
   const { id } = useParams();
@@ -66,53 +69,63 @@ const RecipeDetails = () => {
 
   return (
     <>
-      {!recipe && <Center height="100vh"><Spinner/></Center>}
+    <Navbar />
+      {!recipe && <Center height="100vh"><Spinner /></Center>}
       {recipe &&
-      <div>
-        <Card borderRadius="10px" overflow="hidden" width="80%">
-          <Image src={recipe.image} height="50%" width="100%" />
-          <CardBody>
-            <Heading mb={3} fontSize="2xl">
-              {recipe.title}
-            </Heading>
-            <Text>Category: {recipe.category}</Text>
-            <Text mb={4}>{recipe.description}</Text>
-            <UnorderedList my={5}>
-              <Heading as="h2">Ingredients</Heading>
-              {recipe.ingridients.map((ing, i) => (
-                <ListItem key={i}>{ing}</ListItem>
-              ))}
-            </UnorderedList>
-            <OrderedList>
-              <Heading as="h2">Instructions</Heading>
-              {recipe.instructions.map((instruction, i) => (
-                <ListItem key={i}>{instruction}</ListItem>
-              ))}
-            </OrderedList>
-          </CardBody>
-          <CardFooter>
-            <Text>Author: {recipe.author.email}</Text>
-          </CardFooter>
-          <StarRating rating={rating} setRating={saveRating}/>
-          <Text>({reviewsCount} reviews)</Text>
-        </Card>
-        <Button
-          colorScheme="red"
-          size="sm"
-          onClick={handleDelete}
-          mr="2"
-        >
-          Delete
-        </Button>
-
-        <Button
-          colorScheme="yellow"
-          size="sm"
-          mr="2"
-        >
-          <Link to={"/recipes/" + id + "/edit"}>Edit recipe</Link>
-        </Button>
-      </div>
+        <Center >
+          <Card borderRadius="1px" overflow="hidden" width="40%" mt={5}>
+            <Center>
+              <Image src={recipe.image} height="auto" width="full" objectFit="cover" />
+            </Center>
+            <CardBody>
+              <Stack spacing={4}>
+                <Heading mb={3} fontSize="2xl">
+                  {recipe.title}
+                </Heading>
+                <Text>Category: {recipe.category}</Text>
+                <Text mb={4}>{recipe.description}</Text>
+                <Box>
+                  <Heading as="h2" size="md">Ingredients</Heading>
+                  <UnorderedList my={5}>
+                    {recipe.ingridients.map((ing, i) => (
+                      <ListItem key={i}>{ing}</ListItem>
+                    ))}
+                  </UnorderedList>
+                </Box>
+                <Box>
+                  <Heading as="h2" size="md">Instructions</Heading>
+                  <OrderedList>
+                    {recipe.instructions.map((instruction, i) => (
+                      <ListItem key={i}>{instruction}</ListItem>
+                    ))}
+                  </OrderedList>
+                </Box>
+              </Stack>
+            </CardBody>
+            <CardFooter justifyContent="space-between" alignItems="center">
+              <Box>
+                <Text>Author: {recipe.author.email}</Text>
+                <StarRating rating={rating} setRating={saveRating} />
+                <Text>({reviewsCount} reviews)</Text>
+              </Box>
+              <Stack direction="row" spacing={4}>
+                <Button
+                  colorScheme="red"
+                  size="sm"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+                <Button
+                  colorScheme="yellow"
+                  size="sm"
+                >
+                  <Link to={"/recipes/" + id + "/edit"}>Edit recipe</Link>
+                </Button>
+              </Stack>
+            </CardFooter>
+          </Card>
+        </Center>
       }
     </>
   );

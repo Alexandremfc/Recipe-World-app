@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import apiClient from "../services/api-client";
 import RecipeForm from "../components/RecipeForm";
 import Recipe from "../interfaces/Recipe";
+import Navbar from "../components/Navbar";
 
 const EditRecipe = () => {
 
@@ -20,7 +21,10 @@ const EditRecipe = () => {
   }, []);
 
   return (
+    <>
+    <Navbar/>
     <RecipeForm recipe={recipe}/>
+    </>
   );
 };
 

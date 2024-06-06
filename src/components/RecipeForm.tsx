@@ -93,7 +93,7 @@ const RecipeForm : React.FC<RecipeFormProps> = ({recipe}) => {
       .then((res) => {
         console.log(res);
         // navigate(navigateUrl);
-        navigate("/")
+        navigate(`/recipes/${recipe?._id}`)
       })
       .catch(onError);      
   };
